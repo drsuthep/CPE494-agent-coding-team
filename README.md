@@ -1,48 +1,50 @@
 # CPE494-agent-coding-team
 
-This project implements a **multi-agent AI coding team** that collaborates to design, generate, and validate a real-world software application.
+This repository implements a **multi-agent AI coding team** that collaborates to design, generate, and validate a real-world software application.
 
-The system simulates a software engineering team composed of specialized AI agents, working together to build an **ASP.NET Core ERP Invoice application**.
+The agents work together to build an **ASP.NET Core ERP Invoice application** in the companion repository:
+
+👉 **CPE494-erp-invoice-app-by-ai**
 
 ---
 
-## 🎯 Objective
+## Objective
 
-This repository is part of the CPE494 course and is designed to:
+This project is part of the **CPE494 course** and is designed to:
 
-- Teach students how **AI agents collaborate in software development**
+- Teach how **AI agents collaborate as a development team**
 - Demonstrate **agent orchestration workflows**
-- Show how AI can assist in building a **multi-sprint, production-style application**
+- Show how AI can generate and evolve a **multi-sprint application**
 - Prepare students to discuss **agent-based development systems in interviews**
 
 ---
 
-## 🧠 Multi-Agent Roles
+## Multi-Agent Roles
 
-The system is composed of the following agents:
+The system simulates a software engineering team composed of:
 
 - **Architect**
   - Analyzes requirements
-  - Designs file structure
-  - Produces a technical plan and task list (JSON)
+  - Defines structure and design
+  - Produces a task plan (JSON)
 
 - **Coder**
   - Generates source code (C#, Razor Pages, CSS)
-  - Follows strict conventions (English-only UI, naming rules)
+  - Follows defined conventions and constraints
 
 - **Logic Tester**
-  - Validates code correctness
-  - Checks database rules (PKs, relationships, concurrency)
+  - Validates correctness of code
+  - Checks database rules and integrity
   - Ensures safe transaction behavior
 
 - **UI Auditor**
   - Validates UI against design rules
-  - Enforces "Zen Green" theme
-  - Checks layout consistency and usability rules
+  - Enforces the "Zen Green" theme
+  - Checks layout and usability constraints
 
 ---
 
-## ⚙️ Workflow
+## Workflow
 
 The system follows a structured, human-in-the-loop workflow:
 
@@ -53,48 +55,87 @@ The system follows a structured, human-in-the-loop workflow:
 3. Human reviews and approves the plan
 4. For each task:
    - Coder generates code
-   - Logic Tester reviews correctness
-   - UI Auditor reviews UI/UX
-5. Only code that **passes all checks** is accepted
-6. Changes are applied to the target application
-7. Application is built and verified (`dotnet build`)
+   - Logic Tester validates correctness
+   - UI Auditor validates UI/UX
+5. Only outputs that **pass all checks** are accepted
+6. Approved changes are applied to the target application
+7. Application is built and verified
 8. Human reviews changes via Git and commits
 
 ---
 
-## 🏗️ Target Application
+## Target Application
 
-This agent system generates code into a separate repository:
+This agent system generates code into:
 
-👉 **CPE494-erp-invoice-app**
+👉 **CPE494-erp-invoice-app-by-ai**
 
-The target app is an ASP.NET Core Razor Pages application that will be developed across multiple sprints:
+The application is developed across multiple sprints, including:
 
 - App shell and layout
 - Authentication and authorization
 - Product and customer management
-- Invoice processing (header + line items)
-- Reporting and UI polish
+- Invoice processing
+- Reporting and UI refinement
 
 ---
 
-## 🧪 Technology Stack
+## Technology Stack
 
-- **Language:** Python (agent orchestration)
-- **LLM:** Gemini API (Google)
-- **Backend App:** ASP.NET Core (C# Razor Pages)
-- **Database:** Entity Framework Core
-- **Frontend:** CSS (Zen Green theme), Tabulator, Font Awesome
-- **Environment:** VS Code + Dev Container
-- **Version Control:** Git + GitHub
+- **Language**: Python (agent orchestration)
+- **LLM**: Gemini API
+- **Backend App**: ASP.NET Core (Razor Pages, C#)
+- **Database**: Entity Framework Core
+- **Frontend**: CSS, Tabulator, Font Awesome
+- **Environment**: VS Code
+- **Version Control**: Git and GitHub
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
-erp-agent-coding-team/
-  notebooks/        # Teaching notebooks (orchestrator demo)
-  prompts/          # Agent role definitions
-  src/              # Core orchestration logic
-  outputs/          # Generated plans, logs, artifacts
+notebooks/      Demonstration notebooks (agent workflow)
+prompts/        Agent role definitions
+src/            Core orchestration logic
+outputs/        Generated plans, logs, and artifacts
+```
+
+---
+
+## Running the Agent
+
+From the project root:
+
+```bash
+python src/orchestrator.py
+```
+
+Or run the notebook:
+
+```text
+notebooks/01_agent_demo.ipynb
+```
+
+---
+
+## Notes for Students
+
+- This system is intentionally implemented in **pure Python** for transparency
+- You are expected to understand:
+  - how agents collaborate
+  - how tasks are decomposed
+  - how outputs are validated before acceptance
+- AI output is not guaranteed to be correct — **verification is required**
+
+---
+
+## Key Idea
+
+AI can function as a structured software engineering team when properly orchestrated, constrained, and reviewed.
+
+---
+
+## License
+
+For educational use in CPE494.
