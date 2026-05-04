@@ -33,29 +33,33 @@ ui_specs/ui_reference.pdf
 
 ## Important Recent Change
 
-Step 8 apply logic was updated from all-or-nothing to per-file selection.
+The generated-file transfer logic was moved out of the main workflow notebook.
 
-Updated functions in notebook:
+Generation/audit notebook:
 
 ```text
-load_workflow_results()
-latest_attempt_code_path()
-build_apply_candidates()
-prompt_apply_candidate()
-apply_generated_files_to_target()
+notebooks/agent_coding_workflow.ipynb
+```
+
+Transfer/apply notebook:
+
+```text
+notebooks/transfer_generated_files.ipynb
 ```
 
 Behavior now:
 
-1. Reads file statuses from `workflow_result.json` when available.
+1. Reads the latest run ID from `outputs/latest_run.txt`.
+2. Loads file statuses from `workflow_result.json` when available.
 2. Prompts one file at a time for apply decision.
 3. Default selection is:
    - `y` for `PASS`
    - `n` for `FAIL`
-4. If a file passed, apply source is `generated_files/<path>`.
-5. If a file failed, fallback source is latest attempt code in:
+4. Razor page bundles such as `Pages/Login.cshtml` + `Pages/Login.cshtml.cs` default to skip if either file failed.
+5. If a file passed, apply source is `generated_files/<path>`.
+6. If a file failed, fallback source is latest attempt code in:
    `attempts/<file_key>/attempt_XX_code.txt`
-6. Writes both applied and skipped decisions to `applied_files.json`:
+7. Writes both applied and skipped decisions to `applied_files.json`:
    - `files`
    - `skipped_files`
 
@@ -72,7 +76,8 @@ When user says "Please read AGENTS.md and other docs to get caught up":
    - `workflow_result.json`
    - `audit_logs.jsonl`
    - `applied_files.json` (if apply step was run)
-5. Continue from next sprint goal (currently Sprint 1.1 login placeholder focus).
+5. Use `notebooks/transfer_generated_files.ipynb` for applying generated files.
+6. Continue from next sprint goal (currently Sprint 1.1 login placeholder focus).
 
 ## Current Practical Next Step
 

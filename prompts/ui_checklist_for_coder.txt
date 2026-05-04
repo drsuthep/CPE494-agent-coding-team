@@ -1,0 +1,15 @@
+UI checklist:
+- All UI text must be English only.
+- Do not copy Thai labels from the PDF.
+- Use Zen Green theme consistently.
+- Use dark green #004d40 title/header strips with white text.
+- Use light green/mint accents for borders, highlights, or selected states.
+- Use rounded corners and clean enterprise spacing.
+- Mark required fields with a red asterisk.
+- Every action button must have an English tooltip/title.
+- Use Font Awesome icons consistently for action buttons.
+- Numeric and currency fields must be right-aligned.
+- Header field validation must appear as red text below the field.
+- Line/grid validation must appear as floating tooltip-style messages.
+- Forms must be responsive.
+- Grids must support horizontal scrolling on small screens.
