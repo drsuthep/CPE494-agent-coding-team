@@ -205,9 +205,15 @@ The generated app is:
 - C#
 - Entity Framework Core
 - CSS
-- Tabulator for grids
+- Tabulator for grids (local static files, no CDN)
 - Font Awesome for icons
 - Zen Green theme
+
+## Environment Defaults
+
+- Database provider for generated app: SQL Server LocalDB (`(localdb)\\MSSQLLocalDB`).
+- Tabulator must be installed as local static assets in the generated app repo under `wwwroot/lib/tabulator`.
+- Do not rely on CDN-hosted Tabulator files unless explicitly requested.
 
 ## Runtime Logging and Traceability
 
@@ -239,8 +245,8 @@ command_logs.jsonl
 Stores:
 
 - run ID
-- sprint ID
-- sprint goal
+- phase ID
+- phase goal
 - timestamp
 - agent repo Git commit hash
 - target app repo Git commit hash
@@ -316,7 +322,7 @@ When prompts or specs are refined:
 
 ```bash
 git add prompts/ logic_specs/ ui_specs/
-git commit -m "Refine Sprint 1 UI validation rules"
+git commit -m "Refine current phase UI validation rules"
 ```
 
 Then rerun the notebook. The run folder will capture:
@@ -421,115 +427,67 @@ UI checklist:
 - Grids must support horizontal scrolling on small screens.
 ```
 
-## Planned Sprints
+## Delivery Mode
 
-### Sprint 1: App Shell and Foundation
+Work one phase at a time.
+
+- Sprint 1 is completed.
+- Sprint 2 is the current active phase.
+- Do not maintain numbered future sprint plans in this repository.
+- Refer to upcoming work only as "a future sprint."
+
+## Authorization Scope Decision
+
+Authentication and authorization infrastructure are out of scope for this teaching version.
+
+- Assume the user is authenticated before entering this app.
+- Do not implement login, set password, change password, password reset, or role-based menu permissions unless explicitly requested in a future sprint.
+- Once inside the app, the user may access all menus and pages.
+
+## Current Active Sprint
+
+### Sprint 2: Customer UI Flow
 
 Goal:
 
-- app shell
-- layout
-- Zen Green theme
-- landing page
-- login placeholder
-- menu structure
+- add a `Customer` hyperlink on the welcome page
+- open a customer list view showing all existing customers
+- implement the list as a simple HTML grid/table for now
+- select a customer from list to open customer form view
+- support `Create` action from list to open blank customer form
+- make customer form UI fully functional with Zen Green rules and validation UX
 
-Known Sprint 1 task list:
+Deferred to a future sprint:
 
-```text
-1. wwwroot/css/zen-green.css
-2. wwwroot/css/site.css
-3. Pages/Shared/_Layout.cshtml
-4. Pages/Shared/_Layout.cshtml.css
-5. Pages/Index.cshtml
-6. Pages/Index.cshtml.cs
-7. Pages/Login.cshtml
-8. Pages/Login.cshtml.cs
-```
+- reusable shared Tabulator grid component across all models
+- LoV selection mode wiring
+- any authentication and authorization infrastructure
 
-In one run, 7 out of 8 tasks passed after two attempts. The failed file was:
+## Completed Sprint 1 Record
+
+In one run, 7 out of 8 Sprint 1 tasks passed after two attempts. The failed file was:
 
 ```text
 Pages/Login.cshtml
 ```
 
-Recommended handling:
+Handling used:
 
 - apply only the passed foundation files
 - hold back both `Pages/Login.cshtml` and `Pages/Login.cshtml.cs` as a feature bundle
 - build and inspect the app shell
 - commit the working foundation
-- create Sprint 1.1 focused on the Login page
-
-### Sprint 1.1: Login Placeholder Page
-
-Goal:
-
-- create English-only Login placeholder page
-- database/environment selection
-- username field
-- password field
-- Login button
-- English tooltips
-- Zen Green styling
-- no Thai text
-
-### Sprint 2: Authentication and Authorization
-
-Goal:
-
-- login flow
-- user roles
-- protected pages
-- menu visibility
-- possible user and role models
-
-### Sprint 3: Product and Customer Management
-
-Goal:
-
-- product CRUD
-- customer CRUD
-- validation
-- list views
-- form views
-- Tabulator grids
-- LoV support where needed
-
-### Sprint 4: Invoice Processing
-
-Goal:
-
-- invoice header
-- invoice line items
-- product lookup
-- customer lookup
-- calculations
-- transactional save
-- validation
-- right-aligned numeric fields
-- line-item grid validation
-
-### Sprint 5: Reporting, Polish, and Final Audit
-
-Goal:
-
-- invoice print/view
-- search/filter
-- reporting
-- UX cleanup
-- final logic audit
-- final UI audit
+- defer Login refinement to a future sprint
 
 ## Immediate Recommended Next Step
 
-Since Sprint 1 had one failed file:
+With Sprint 1 completed and Sprint 2 now active:
 
 1. Keep the current run logs.
 2. Apply only the passed foundation files.
 3. Hold back both Login files.
 4. Build and manually inspect the app shell.
 5. Commit the working foundation in the app repo.
-6. Create Sprint 1.1 for the Login placeholder page.
+6. Run Sprint 2 for Customer UI flow.
 7. Update the Coder context to include the compact UI checklist.
-8. Increase max attempts to 3.
+8. Keep max attempts at 3.

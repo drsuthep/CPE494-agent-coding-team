@@ -11,9 +11,9 @@ The target application is an English-only ASP.NET Core Razor Pages ERP module. T
 - ASP.NET Core Razor Pages
 - C#
 - Entity Framework Core
-- Local database suitable for development, such as SQLite or SQL Server LocalDB
+- SQL Server LocalDB (`(localdb)\\MSSQLLocalDB`)
 - Git for version control
-- Tabulator and Font Awesome may be used by UI code where appropriate
+- Tabulator (local static files in app repo) and Font Awesome may be used by UI code where appropriate
 
 ## 3. Strict Language Rule
 
@@ -167,8 +167,7 @@ Suggested fields:
 
 Rules:
 
-- Passwords must never be stored as plain text.
-- Admin reset and self-service password flows should be separated.
+- Authentication internals are out of scope for this teaching version unless explicitly requested in a future sprint.
 
 ### Role
 
@@ -181,7 +180,7 @@ Suggested fields:
 
 Rules:
 
-- Role-based access control must be implemented before protected business forms are exposed.
+- Role-based access control is out of scope for this teaching version unless explicitly requested in a future sprint.
 
 ## 7. Transaction Rules
 
@@ -211,11 +210,11 @@ The UI style for displaying validation messages is defined in `ui_specs/erp_invo
 
 ## 9. Security Rules
 
-- Use ASP.NET Core authentication for login and protected pages.
-- Do not store plain-text passwords.
+- Assume users are authenticated by an upstream system before entering this application.
+- Do not implement login, password setup, password change, password reset, or role-based access checks in this scope.
 - Use Entity Framework Core or parameterized queries to prevent SQL injection.
 - Validate user input before saving.
-- Restrict access to protected forms based on role permissions.
+- In this teaching version, any user who enters the app can access all menus and pages.
 
 ## 10. Code Quality Rules
 
@@ -228,44 +227,23 @@ Generated code must:
 - separate reusable services when logic becomes complex
 - avoid hardcoding business data in UI files
 
-## 11. Planned Sprint Scope
+## 11. Current Sprint Scope
 
-### Sprint 1: App Shell and Theme
+Sprint 1 is completed.
 
-- Create the app shell.
-- Create the global Zen Green theme CSS.
-- Create a landing page.
-- Create a login placeholder.
-- Create menu placeholders for master data, transactions, reports, and control.
+Sprint 2 (current): Customer UI flow
 
-### Sprint 2: Authentication and Authorization
+- Add a `Customer` hyperlink on the welcome page.
+- Open a customer list view showing all existing customers.
+- Implement the list with a simple HTML grid/table for now.
+- Allow selecting a customer to open customer form view.
+- Allow creating a new customer from list view.
+- Make the customer form UI fully functional for create and edit flow.
 
-- Implement login flow.
-- Implement user and role models.
-- Protect application pages.
-- Add user menu and password management placeholders.
+Future sprint notes:
 
-### Sprint 3: Master Data
-
-- Implement product CRUD.
-- Implement customer CRUD.
-- Implement list views and form views.
-- Add validation and search/filter behavior.
-
-### Sprint 4: Invoice Processing
-
-- Implement invoice list view.
-- Implement invoice form with header and line items.
-- Implement product and customer lookup behavior.
-- Implement transaction-safe save logic.
-- Recalculate all totals server-side.
-
-### Sprint 5: Reporting and Final Polish
-
-- Add invoice viewing or print-friendly output.
-- Add reports and search/filter refinements.
-- Add change log, notes, and attachment placeholders where appropriate.
-- Perform final logic and UI audit.
+- Use a reusable Tabulator-based list/grid component pattern across model list views and LoV flows.
+- Expand product, invoice, reporting, and optional shared subforms in a future sprint.
 
 ## 12. Auditor Checklist for Logic Tester
 

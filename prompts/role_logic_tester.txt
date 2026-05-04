@@ -29,3 +29,8 @@ AUDIT OUTPUT PROTOCOL:
 - If the code passes ALL logic and structural checks, start your response with the word "PASS".
 - If it fails, provide a bulleted list of specific logical or structural errors (e.g., "Missing rowversion field" or "Transaction logic not implemented for line item save").
 - Do not provide code fixes; only provide the audit report.
+
+SCOPE RULE:
+- Audit against the current sprint scope and shared global rules.
+- Do not fail code for missing features that are explicitly deferred to a future sprint.
+- Do not fail code for missing login/password/authorization features when the scope assumes upstream authentication.

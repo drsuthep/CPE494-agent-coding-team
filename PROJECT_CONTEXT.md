@@ -27,7 +27,7 @@ ui_specs/ui_reference.pdf
 ## Current Workflow Status
 
 - Main orchestration file: `notebooks/agent_coding_workflow.ipynb`.
-- Sprint 1 run referenced in recent work:
+- Completed Sprint 1 run referenced in recent work:
   - `outputs/runs/2026-05-04_141246_sprint_01/`
   - result: 7 pass, 1 fail (`Pages/Login.cshtml` failed UI audit).
 
@@ -77,12 +77,10 @@ When user says "Please read AGENTS.md and other docs to get caught up":
    - `audit_logs.jsonl`
    - `applied_files.json` (if apply step was run)
 5. Use `notebooks/transfer_generated_files.ipynb` for applying generated files.
-6. Continue from next sprint goal (currently Sprint 1.1 login placeholder focus).
+6. Continue from current sprint goal (Sprint 2 customer UI flow).
 
 ## Current Practical Next Step
 
-- Re-run Login work as Sprint 1.1.
-- Keep bundle mindset for:
-  - `Pages/Login.cshtml`
-  - `Pages/Login.cshtml.cs`
+- Run Sprint 2 customer UI flow as the active sprint.
+- Keep bundle mindset for related paired Razor files when applying generated output.
 - Use per-file apply prompt defaults (PASS => `y`, FAIL => `n`) when porting to app repo.

@@ -14,7 +14,7 @@ This project is part of the **CPE494 course** and is designed to:
 
 - Teach how **AI agents collaborate as a development team**
 - Demonstrate **agent orchestration workflows**
-- Show how AI can generate and evolve a **multi-sprint application**
+- Show how AI can generate and evolve an application through **iterative one-sprint-at-a-time delivery**
 - Prepare students to discuss **agent-based development systems in interviews**
 
 ---
@@ -48,7 +48,7 @@ The system simulates a software engineering team composed of:
 
 The system follows a structured, human-in-the-loop workflow:
 
-1. Human provides a **Sprint Goal**
+1. Human provides the **Current Sprint Goal**
 2. Architect generates:
    - `manifest.json`
    - `tasks.json`
@@ -70,13 +70,11 @@ This agent system generates code into:
 
 👉 **CPE494-erp-invoice-app-by-ai**
 
-The application is developed across multiple sprints, including:
+The application is developed one sprint at a time. Sprint 1 is completed, and Sprint 2 is the current focus:
 
 - App shell and layout
-- Authentication and authorization
-- Product and customer management
-- Invoice processing
-- Reporting and UI refinement
+- Customer list and form UI flow
+- Additional capabilities in a future sprint
 
 ---
 

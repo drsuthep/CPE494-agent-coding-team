@@ -38,3 +38,8 @@ AUDIT OUTPUT PROTOCOL:
 - If the code passes ALL rules above, start your response with "PASS".
 - If it fails, provide a bulleted list of discrepancies (e.g., "Found Thai labels; must be English" or "Invoice Total is left-aligned").
 - Do not provide code fixes; only provide the audit report.
+
+SCOPE RULE:
+- Audit against current sprint UI requirements and global UI rules.
+- Do not fail code for missing features that are explicitly deferred to a future sprint.
+- Do not fail code for missing login/password UI when the scope assumes upstream authentication.

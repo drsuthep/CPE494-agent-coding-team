@@ -18,7 +18,7 @@ STRICT TECHNICAL STANDARDS:
 3. UI & UX (ZEN GREEN THEME):
    - COLORS: Use dark green title strips (#004d40) and light green accents.
    - ALIGNMENT: Numeric and currency fields MUST be right-aligned.
-   - INTERACTION: Every button MUST have a descriptive English tooltip. Use Tabulator for grids.
+   - INTERACTION: Every button MUST have a descriptive English tooltip. Use Tabulator for grids from local app static files, not CDN links.
    - INDICATORS: Mark required fields with a red asterisk (*).
    - VALIDATION: 
      - Header errors: Use a separate row of red characters below the field.
@@ -29,3 +29,8 @@ OUTPUT PROTOCOL:
 - Do NOT include markdown code blocks (no ```csharp or ```css).
 - Do NOT include conversational text or explanations.
 - The output must be ready to save directly to a file and compile.
+
+SCOPE RULE:
+- Implement only the current sprint task request.
+- Do not add extra features from future sprint ideas unless explicitly instructed.
+- Assume user authentication is handled upstream; do not implement login/password/authorization infrastructure unless explicitly requested.

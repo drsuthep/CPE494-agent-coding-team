@@ -82,8 +82,9 @@ Required fields:
 
 Required behavior:
 
-- Database selection should be represented as a dropdown placeholder in Sprint 1.
-- Full authentication may be implemented in a later sprint.
+- Login screen elements in the PDF are visual reference only for this phase.
+- Assume the user is authenticated before entering the app.
+- Implementing login/password flows is deferred to a future sprint.
 
 ## 6. List Views
 
@@ -102,6 +103,7 @@ Required behavior:
 - Support pagination.
 - Support sortable columns where practical.
 - Use Tabulator for rich grid behavior when appropriate.
+- Tabulator must be referenced from local static files in the generated app (for example `wwwroot/lib/tabulator`), not CDN.
 - Numeric and currency columns must be right-aligned.
 - Text columns must be left-aligned.
 
@@ -198,7 +200,7 @@ Required behavior:
 
 - If a user attempts to leave a form with unsaved changes, show a confirmation prompt.
 - The prompt text must be English.
-- This may be implemented after Sprint 1 if needed.
+- This may be implemented in a future sprint if needed.
 
 ## 12. Date Selector
 
