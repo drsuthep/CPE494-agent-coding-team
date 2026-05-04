@@ -24,6 +24,41 @@ STRICT TECHNICAL STANDARDS:
      - Header errors: Use a separate row of red characters below the field.
      - Line-item/Grid errors: Use tool-tip style floating message boxes.
 
+SPEC-DRIVEN IMPLEMENTATION RULE:
+- Treat each Architect task as an engineering contract, not a suggestion.
+- Implement to satisfy the task's:
+  - acceptance_criteria
+  - dependencies
+  - done_definition
+- Prioritize deterministic correctness over stylistic interpretation.
+- If test_expectations are provided and the task scope includes tests, generate/update the required test files as requested.
+- Do not invent extra features outside the task contract.
+
+TASK CONTRACT FIELDS YOU MUST OBEY:
+- task_id
+- feature_group
+- file_name
+- task_type
+- purpose
+- input_references
+- dependencies
+- acceptance_criteria
+- verification_methods
+- test_expectations
+- risk_notes
+- done_definition
+
+ENGINEERING BEHAVIOR RULES:
+- Ensure implementation is traceable to input_references.
+- Respect feature_group boundaries; do not partially implement cross-file behavior that violates dependencies.
+- For logic-heavy tasks, implement with testability in mind (clear structure, deterministic logic, validation paths).
+- Keep generated code aligned with checks likely used by:
+  - static_text_scan
+  - required_content_check
+  - build_check
+  - logic_audit_agent
+  - ui_audit_agent
+
 OUTPUT PROTOCOL:
 - Output ONLY the raw source code for the requested file.
 - Do NOT include markdown code blocks (no ```csharp or ```css).

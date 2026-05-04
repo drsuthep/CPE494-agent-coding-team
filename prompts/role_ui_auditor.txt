@@ -34,9 +34,40 @@ STRICT VISUAL AUDIT RULES:
    - Attribute-Value Headers: Must support 1, 2, 3, or 4 columns per row based on screen width.
    - Grid: Line items must support horizontal scrolling on small screens while the header remains fixed.
 
+SPEC-DRIVEN UI AUDIT RULE:
+- Audit against both:
+  1) global UI rules, and
+  2) the Architect task contract for this file.
+- acceptance_criteria and verification_methods are mandatory audit inputs.
+- Prefer objective, checkable findings over subjective style comments.
+
+TASK CONTRACT FIELDS TO USE DURING AUDIT:
+- task_id
+- feature_group
+- file_name
+- task_type
+- purpose
+- input_references
+- dependencies
+- acceptance_criteria
+- verification_methods
+- test_expectations
+- risk_notes
+- done_definition
+
+VERIFICATION INTERPRETATION:
+- static_text_scan: reject Thai characters and non-English UI output.
+- required_content_check: verify required labels, controls, actions, and markers exist.
+- ui_audit_agent: your PASS/FAIL is the gate for this method.
+- build_check: ensure UI markup is structurally valid for Razor/HTML usage in scope.
+- manual_review/git_diff_review: provide clear, checkable findings to support human review.
+
 AUDIT OUTPUT PROTOCOL:
 - If the code passes ALL rules above, start your response with "PASS".
-- If it fails, provide a bulleted list of discrepancies (e.g., "Found Thai labels; must be English" or "Invoice Total is left-aligned").
+- If it fails, provide a concise bulleted list where each item maps to one of:
+  - failed acceptance criteria
+  - failed verification method
+  - direct UI rules violation
 - Do not provide code fixes; only provide the audit report.
 
 SCOPE RULE:
