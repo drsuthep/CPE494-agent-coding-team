@@ -56,7 +56,7 @@ The complete application is expected to include at least the following business 
 
 ### Product
 
-Suggested fields:
+Suggested fields in table:
 
 - `id`
 - `product_code`
@@ -75,22 +75,33 @@ Rules:
 
 ### Customer
 
-Suggested fields:
+Suggested fields in table:
 
 - `id`
-- `customer_code`
-- `customer_name`
+- `code`
+- `name`
 - `address_line_1`
 - `address_line_2`
-- `address_line_3`
+- `city`
+- `province`  
 - `country`
+- `postal_code`
+- `phone_number`
+- `email`
+- `credit_limit`
 - `is_active`
-- `rowversion`
+- `rowversion` 
+- `delivery_address_line_1`
+- `delivery_address_line_2`
+- `delivery_city`
+- `delivery_province`  
+- `delivery_country`
+- `delivery_postal_code`
 
 Rules:
 
-- `customer_code` is required and should be unique.
-- `customer_name` is required.
+- `code` is required and should be unique.
+- `name` is required.
 
 ### Invoice Header
 
@@ -100,17 +111,15 @@ Suggested fields:
 - `invoice_no`
 - `invoice_date`
 - `customer_id`
-- `customer_name_snapshot`
-- `address_line_1`
-- `address_line_2`
-- `address_line_3`
-- `country`
 - `subtotal_amount`
 - `vat_rate`
 - `vat_amount`
-- `grand_total_amount`
-- `status`
+- `amount_due`
 - `rowversion`
+
+Linked fields displayed as uneditable text in the invoice header section: customer.code, customer.name, customer.address_line_1, customer.address_line_2, customer.city, customer.province, customer.country, customer.postal_code, customer.phone_number, customer.email.    
+
+
 
 Rules:
 
@@ -122,19 +131,18 @@ Rules:
 
 ### Invoice Line
 
-Suggested fields:
+Suggested fields in table:
 
 - `id`
 - `invoice_id`
 - `line_no`
 - `product_id`
-- `product_code_snapshot`
-- `product_name_snapshot`
 - `quantity`
 - `unit_price`
-- `unit_name`
-- `line_total_amount`
+- `extended_price`
 - `rowversion`
+
+Linked fields displayed as uneditable text in the invoice line section: product_code, product_name, unit_name.    
 
 Rules:
 
@@ -143,7 +151,7 @@ Rules:
 - `product_id` is required.
 - `quantity` must be greater than zero.
 - `unit_price` must be non-negative.
-- `line_total_amount` must be calculated as `quantity * unit_price`.
+- `extended_price` must be calculated as `quantity * unit_price`.
 
 ### User
 
