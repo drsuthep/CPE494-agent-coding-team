@@ -1,4 +1,4 @@
-# ERP Invoice App — Logic Specification (Baseline)
+﻿# ERP Invoice App  -  Logic Specification (Baseline)
 
 ## 1. Purpose
 
@@ -27,8 +27,8 @@ All code, identifiers, comments, UI strings, and error messages must be **Englis
 
 Every persistent entity has two identifiers:
 
-- **`id`** — Django default auto-increment primary key. **Hidden from the UI** in every screen (list, form, LOV picker). It is the stable referential value used in foreign keys and APIs.
-- **Display code** — a short, human-friendly identifier shown to users in lists, forms, and LOV pickers. Field names by entity:
+- **`id`**  -  Django default auto-increment primary key. **Hidden from the UI** in every screen (list, form, LOV picker). It is the stable referential value used in foreign keys and APIs.
+- **Display code**  -  a short, human-friendly identifier shown to users in lists, forms, and LOV pickers. Field names by entity:
   - `code` for Customer
   - `code` for Product
   - `invoice_no` for Invoice
@@ -42,10 +42,10 @@ When a foreign key field is rendered in a form, the form stores the related reco
 
 Every persistent entity has:
 
-- `id` — auto PK (Django default).
+- `id`  -  auto PK (Django default).
 - The entity's display code field (per Section 5), `unique=True`.
-- `updated_at` — `models.DateTimeField(auto_now=True)`. Lightweight last-modified field.
-- `__str__(self)` returning the display code (e.g., `return self.code`) or `f"{self.code} — {self.name}"` if the entity has a name distinct from the code.
+- `updated_at`  -  `models.DateTimeField(auto_now=True)`. Lightweight last-modified field.
+- `__str__(self)` returning the display code (e.g., `return self.code`) or `f"{self.code}  -  {self.name}"` if the entity has a name distinct from the code.
 - `class Meta: ordering = [...]` where order matters in list views.
 
 When the active sprint scope declares a need for optimistic concurrency (typically when multiple users may write the same record concurrently), implement an explicit version field (`version = models.IntegerField(default=0)`). Otherwise, `updated_at` is sufficient.
@@ -62,7 +62,7 @@ Any save that touches more than one table must be wrapped in `transaction.atomic
 
 ## 9. Server-Side Validation Mandate
 
-Server-side validation is required for all persisted writes, even if client-side validation exists. All form input goes through Django `Form` or `ModelForm` — never read `request.POST` directly into the ORM.
+Server-side validation is required for all persisted writes, even if client-side validation exists. All form input goes through Django `Form` or `ModelForm`  -  never read `request.POST` directly into the ORM.
 
 Validation categories:
 
@@ -90,9 +90,9 @@ Every generated file must:
 - Have all imports at the top of the file.
 - Have no unused imports.
 - Have docstrings on public functions, classes, and views.
-- Avoid hardcoded business data in templates — pass through view context.
+- Avoid hardcoded business data in templates  -  pass through view context.
 - Return appropriate HTTP responses (`HttpResponse`, `redirect`, etc.).
-- Respect the Reuse Architecture (Section 13) — no per-entity duplication of logic that a shared module already covers.
+- Respect the Reuse Architecture (Section 13)  -  no per-entity duplication of logic that a shared module already covers.
 
 ## 12. Test Standards (TDD Layer)
 
@@ -106,15 +106,16 @@ Every generated file must:
 
 All entities share the same code modules:
 
-- **Shared list view module** — a single Django view function/class parameterized by model. It supports two modes:
-  - **Browse mode** — entered from the navbar; clicking a row opens the form view for that record.
-  - **Select mode** — entered from a parent form's LOV button; clicking a row returns the selected id+display code to the parent form. Detailed in `ui_specs/form_workflow.md`.
+- **Shared list view module**  -  a single Django view function/class parameterized by model. It supports two modes:
+  - **Browse mode**  -  entered from the navbar; clicking a row opens the form view for that record.
+  - **Select mode**  -  entered from a parent form's LOV button; clicking a row returns the selected id+display code to the parent form. Detailed in `ui_specs/form_workflow.md`.
   Both modes share the same sorting, searching, filtering, and pagination capabilities.
-- **Shared form view module** — a single Django view function/class parameterized by model and form class. Handles dirty-bit rendering hints, Save/Close/Delete dispatch, save-flash messaging, and FK rendering as id-hidden + code-visible + LOV.
-- **Shared template partials** — `templates/_partials/list_table.html` and `templates/_partials/form_layout.html` for the visual side. Logic-side templates (e.g., the LOV select-mode renderer) may also live in `_partials/`.
+- **Shared form view module**  -  a single Django view function/class parameterized by model and form class. Handles dirty-bit rendering hints, Save/Close/Delete dispatch, save-flash messaging, and FK rendering as id-hidden + code-visible + LOV.
+- **Shared template partials**  -  `templates/_partials/list_table.html` and `templates/_partials/form_layout.html` for the visual side. Logic-side templates (e.g., the LOV select-mode renderer) may also live in `_partials/`.
 
-The architect plans whether the active sprint extracts these modules from per-entity code or reuses already-existing shared modules. Once a shared module exists, no per-entity duplication is allowed — the logic tester FAILs duplicated code that a shared module already covers.
+The architect plans whether the active sprint extracts these modules from per-entity code or reuses already-existing shared modules. Once a shared module exists, no per-entity duplication is allowed  -  the logic tester FAILs duplicated code that a shared module already covers.
 
 ## 14. Sprint-Layer Detail Comes Per Sprint
 
 This file does NOT enumerate fields, validations, or behaviors for individual entities. Those live in the active sprint scope file. The agents must read both layers.
+

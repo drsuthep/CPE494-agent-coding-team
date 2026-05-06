@@ -1,8 +1,8 @@
-# AGENTS.md
+﻿# AGENTS.md
 
-CPE494 Agent Coding Lab — Operating Manual.
+CPE494 Agent Coding Lab  -  Operating Manual.
 
-This file tells the four AI agents in the team **how** to work. It does not say **what** to build in any current sprint — that comes from the active sprint scope file in `sprints/`.
+This file tells the four AI agents in the team **how** to work. It does not say **what** to build in any current sprint  -  that comes from the active sprint scope file in `sprints/`.
 
 ## 1. Project Goal
 
@@ -12,19 +12,19 @@ The lab uses a multi-agent AI team to incrementally build a teaching ERP applica
 
 The lab follows Spec-Driven Development (SDD) and Test-Driven Development (TDD) using two layers of contract.
 
-**Layer 1 — Baseline (this folder):** broad, stable rules.
+**Layer 1  -  Baseline (this folder):** broad, stable rules.
 
-- `AGENTS.md` — this file (operating manual)
-- `logic_specs/erp_invoice_logic.md` — broad logic principles
-- `ui_specs/erp_invoice_ui.md` — broad UI / theme principles
-- `ui_specs/form_workflow.md` — form behavior (modes, buttons, dirty bit, save feedback, LOV, navigation)
-- `ui_specs/ui_reference.pdf` — visual inspiration only (Thai labels: ignore — output English only)
-- `prompts/role_*.txt` — agent behavior contracts (one per agent)
-- `prompts/ui_checklist_for_coder.txt` — broad UI checklist
+- `AGENTS.md`  -  this file (operating manual)
+- `logic_specs/erp_invoice_logic.md`  -  broad logic principles
+- `ui_specs/erp_invoice_ui.md`  -  broad UI / theme principles
+- `ui_specs/form_workflow.md`  -  form behavior (modes, buttons, dirty bit, save feedback, LOV, navigation)
+- `ui_specs/ui_reference.pdf`  -  visual inspiration only (Thai labels: ignore  -  output English only)
+- `prompts/role_*.txt`  -  agent behavior contracts (one per agent)
+- `prompts/ui_checklist_for_coder.txt`  -  broad UI checklist
 
-**Layer 2 — Sprint scope (per sprint):** detailed contract.
+**Layer 2  -  Sprint scope (per sprint):** detailed contract.
 
-- `sprints/sprint_NN_scope.md` — entity fields, file bundle, acceptance criteria, test cases, smoke-run, definition of done. Authored fresh per sprint.
+- `sprints/sprint_NN_scope.md`  -  entity fields, file bundle, acceptance criteria, test cases, smoke-run, definition of done. Authored fresh per sprint.
 
 **Every agent run loads BOTH layers.** The current sprint scope file is the authoritative contract for what to build in this sprint. Layer 1 answers "how do we build"; Layer 2 answers "what are we building right now."
 
@@ -99,7 +99,7 @@ Four agents, one role each. The team size is intentionally fixed at four to keep
 ### Coder Agent
 
 - Reads: baseline + active sprint scope + assigned task contract + existing target file (if any) + previous audit feedback (if any).
-- Produces: ONE source file at a time as raw source — no markdown fences, no prose.
+- Produces: ONE source file at a time as raw source  -  no markdown fences, no prose.
 - For tasks that include test cases, the bundle includes a `tests.py` task; the coder writes those concrete assertions as Django `TestCase` methods.
 
 ### Logic Tester Agent
@@ -116,17 +116,17 @@ Four agents, one role each. The team size is intentionally fixed at four to keep
 
 ## 7. Hybrid File Bundle Protocol
 
-The architect groups related files under the same `feature_group` (a "feature bundle"). A bundle is applied atomically — either every file in a bundle passes audits or the bundle is held back at the transfer step. Each task in `tasks.json` represents **one file**; tasks in the same bundle share a `feature_group` value.
+The architect groups related files under the same `feature_group` (a "feature bundle"). A bundle is applied atomically  -  either every file in a bundle passes audits or the bundle is held back at the transfer step. Each task in `tasks.json` represents **one file**; tasks in the same bundle share a `feature_group` value.
 
 ## 8. Reuse Architecture
 
 The app is a development template. Every existing and future entity reuses the same shared modules:
 
-- **Shared list view code** — one Django view module is parameterized by model class. Every entity's list page renders through it. Investments in sorting, searching, filtering, and pagination apply to every list at once.
-- **Shared form view code** — one Django view module is parameterized by model class and form class. Every entity's create/edit page renders through it. Investments in dirty-bit handling, save feedback, validation display, and Close/Delete behavior apply everywhere.
-- **Shared template partials** — `templates/_partials/list_table.html` and `templates/_partials/form_layout.html` carry the visual layout reused by every entity's templates.
-- **List of Values (LOV) pattern** — every foreign key field renders as `hidden id input + visible display-code input + LOV button`. The LOV button opens the related entity's list view in select-mode. Selecting a row fills the FK and returns to the parent form. Defined in `ui_specs/form_workflow.md`.
-- **Canonical UI vocabulary** — the action buttons (New, Save, Close, Edit, Delete, LOV) and their semantics are the same across every form. Defined in `ui_specs/form_workflow.md`.
+- **Shared list view code**  -  one Django view module is parameterized by model class. Every entity's list page renders through it. Investments in sorting, searching, filtering, and pagination apply to every list at once.
+- **Shared form view code**  -  one Django view module is parameterized by model class and form class. Every entity's create/edit page renders through it. Investments in dirty-bit handling, save feedback, validation display, and Close/Delete behavior apply everywhere.
+- **Shared template partials**  -  `templates/_partials/list_table.html` and `templates/_partials/form_layout.html` carry the visual layout reused by every entity's templates.
+- **List of Values (LOV) pattern**  -  every foreign key field renders as `hidden id input + visible display-code input + LOV button`. The LOV button opens the related entity's list view in select-mode. Selecting a row fills the FK and returns to the parent form. Defined in `ui_specs/form_workflow.md`.
+- **Canonical UI vocabulary**  -  the action buttons (New, Save, Close, Edit, Delete, LOV) and their semantics are the same across every form. Defined in `ui_specs/form_workflow.md`.
 
 The exact moment in the build progression when each shared module is *introduced* is decided per sprint. The architect uses the active sprint scope to choose between extracting a new shared module from per-entity code, or reusing existing shared code. The architect must NOT plan to duplicate code that a shared module already covers.
 
@@ -166,7 +166,7 @@ Every notebook run creates `outputs/runs/<run_id>/` containing:
 ## 13. Output Safety
 
 - Never overwrite the target app repo directly during generation.
-- Flow: **generate → audit → save to generated_files → human approve → apply to app repo → smoke run → commit.**
+- Flow: **generate -> audit -> save to generated_files -> human approve -> apply to app repo -> smoke run -> commit.**
 
 ## 14. Smoke Run Gate
 
@@ -176,7 +176,7 @@ The transfer notebook MUST execute, after files are applied to the target repo:
 - `python manage.py makemigrations`
 - `python manage.py migrate`
 - `python manage.py test`
-- HTTP smoke GETs against URLs declared in the active sprint scope's "Smoke Run" section. The transfer notebook parses these URLs from the scope file at runtime — no sprint-specific URLs are hardcoded in the notebook.
+- HTTP smoke GETs against URLs declared in the active sprint scope's "Smoke Run" section. The transfer notebook parses these URLs from the scope file at runtime  -  no sprint-specific URLs are hardcoded in the notebook.
 
 A sprint is **not done** until the smoke run passes.
 
@@ -201,6 +201,7 @@ The architect plans ONLY the active sprint. Future-sprint features must be defer
 2. Set `SPRINT_SCOPE_FILE` in `notebooks/agent_coding_workflow.ipynb`.
 3. Run the workflow.
 4. Inspect generated_files and audit logs.
-5. Run `notebooks/transfer_generated_files.ipynb` — applies files AND runs smoke gate.
+5. Run `notebooks/transfer_generated_files.ipynb`  -  applies files AND runs smoke gate.
 6. If smoke run passes: git commit in target repo, then file feedback for the next sprint scope.
 7. Author the next sprint scope file and repeat.
+

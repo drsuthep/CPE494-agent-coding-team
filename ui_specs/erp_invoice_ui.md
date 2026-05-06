@@ -1,4 +1,4 @@
-# ERP Invoice App — UI Specification (Baseline)
+﻿# ERP Invoice App  -  UI Specification (Baseline)
 
 ## 1. Purpose
 
@@ -33,25 +33,25 @@ Green enterprise theme. Required CSS tokens (declared once in `templates/base.ht
 
 - Top navbar (Bootstrap 5 navbar) with module groups: at minimum **Customers**, **Products**, **Invoices**. Modules become live as their sprints land. Navbar links navigate to each entity's list view.
 - User placeholder area on the right (no real auth in baseline).
-- Landing page (`/`) is the rest state of the app — a welcome card. Closing the list view returns here.
+- Landing page (`/`) is the rest state of the app  -  a welcome card. Closing the list view returns here.
 
 ## 5. Two Views per Model
 
 Every entity has exactly two screens:
 
-- **List View** — accessed from the navbar. Also reused as an LOV picker when invoked from a parent form's foreign key field. Lists existing records with sortable, searchable, filterable columns.
-- **Form View** — accessed by clicking `+ New` (from list view) or by clicking a row (to edit existing). Single mode: always editable.
+- **List View**  -  accessed from the navbar. Also reused as an LOV picker when invoked from a parent form's foreign key field. Lists existing records with sortable, searchable, filterable columns.
+- **Form View**  -  accessed by clicking `+ New` (from list view) or by clicking a row (to edit existing). Single mode: always editable.
 
-**Navigation hierarchy:** Form → List → Landing. Each Close pops up one level.
+**Navigation hierarchy:** Form -> List -> Landing. Each Close pops up one level.
 
-Detailed behavior — buttons, dirty bit, save flash, LOV pick flow, delete flow — lives in `ui_specs/form_workflow.md`.
+Detailed behavior  -  buttons, dirty bit, save flash, LOV pick flow, delete flow  -  lives in `ui_specs/form_workflow.md`.
 
 ## 6. Reusable Layout Pattern
 
 Every entity uses the shared partials:
 
-- `templates/_partials/list_table.html` — list view layout.
-- `templates/_partials/form_layout.html` — form view layout.
+- `templates/_partials/list_table.html`  -  list view layout.
+- `templates/_partials/form_layout.html`  -  form view layout.
 
 Per-entity templates (`templates/customers/list.html`, etc.) are thin wrappers that include the partial and pass entity-specific context. The active sprint scope's file bundle indicates whether the current sprint is extracting these from per-entity code or reusing existing partials.
 
@@ -59,12 +59,12 @@ Per-entity templates (`templates/customers/list.html`, etc.) are thin wrappers t
 
 This is the fixed vocabulary across the entire app. Full details (icons, variants, when used, confirm behavior) live in `ui_specs/form_workflow.md`.
 
-- **+ New** (`fa-plus`, primary) — list view top-right.
-- **Edit** / row link (`fa-pen` optional) — list row.
-- **Delete** (`fa-trash`, danger) — list row OR form action row.
-- **Save** (`fa-floppy-disk`, primary) — form action row.
-- **Close** (`fa-xmark`, secondary) — form action row (→ list view) AND list view top-right (→ landing).
-- **LOV** (`fa-list`, small) — adjacent to a foreign-key input.
+- **+ New** (`fa-plus`, primary)  -  list view top-right.
+- **Edit** / row link (`fa-pen` optional)  -  list row.
+- **Delete** (`fa-trash`, danger)  -  list row OR form action row.
+- **Save** (`fa-floppy-disk`, primary)  -  form action row.
+- **Close** (`fa-xmark`, secondary)  -  form action row (-> list view) AND list view top-right (-> landing).
+- **LOV** (`fa-list`, small)  -  adjacent to a foreign-key input.
 
 No new buttons may be invented without updating `form_workflow.md`.
 
@@ -86,7 +86,7 @@ After a successful save, the user stays on the form (showing the saved record) a
 
 ## 11. Responsiveness, Density, and Scrolling
 
-- **Form column density** is configurable per form: 1, 2, 3, or 4 columns at maximum viewport, collapsing smoothly as the viewport narrows (xl → lg → md → sm). Default density is 2. See `form_workflow.md` Section 12 for the full breakpoint table and Bootstrap class mapping.
+- **Form column density** is configurable per form: 1, 2, 3, or 4 columns at maximum viewport, collapsing smoothly as the viewport narrows (xl -> lg -> md -> sm). Default density is 2. See `form_workflow.md` Section 12 for the full breakpoint table and Bootstrap class mapping.
 - **List view** uses a fixed-height viewport (`max-height: 60vh`) with vertical scroll AND server-side pagination (default page size = 50 records, configurable per entity). See `form_workflow.md` Section 13.
 - **Line item grids** (master-detail forms) use a fixed-height viewport (`max-height: 50vh`) with vertical scroll and sticky `<thead>`. See `form_workflow.md` Section 14.
 - All tables wrapped in `.table-responsive` for horizontal scroll on small screens.
@@ -114,3 +114,4 @@ Foreign key fields render as `hidden id input + visible read-only display-code i
 ## 16. Sprint-Layer Detail Comes Per Sprint
 
 Specific page layouts, field sets, button labels for entity-specific text, and screen names are in the active sprint scope file. This file defines rules that apply across every entity.
+

@@ -1,4 +1,4 @@
-# Sprint NN — <Sprint Title>
+﻿# Sprint NN  -  <Sprint Title>
 
 > Authoritative contract for this sprint. Every agent must read this file (Layer 2) plus the baseline files (Layer 1).
 
@@ -38,7 +38,7 @@ Exhaustive list of files this sprint creates or edits, grouped by `feature_group
 
 ### bundle_<name>
 
-- `path/to/file.py` — what it does
+- `path/to/file.py`  -  what it does
 
 (Repeat per bundle. The architect MUST emit one task per file with the matching `feature_group`. Bundles are applied atomically.)
 
@@ -54,8 +54,8 @@ Numbered, observable. Format: "When X happens, Y is observable."
 
 Concrete assertions the architect declares in `test_cases` and the coder implements in `tests.py`.
 
-1. `test_<entity>_<scenario>` — GET /<path>/ returns 200 AND response.content contains "<expected>".
-2. `test_<entity>_save_flash` — POST valid → response (after redirect-follow) contains "Saving... Save successful".
+1. `test_<entity>_<scenario>`  -  GET /<path>/ returns 200 AND response.content contains "<expected>".
+2. `test_<entity>_save_flash`  -  POST valid -> response (after redirect-follow) contains "Saving... Save successful".
 3. ...
 
 Include at least one unhappy-path test per form.
@@ -77,7 +77,7 @@ python manage.py migrate
 python manage.py test
 ```
 
-HTTP GETs that must return 200 — the transfer notebook parses these URLs from this section at runtime. List one URL per bullet, either as a full URL or as a path inside backticks:
+HTTP GETs that must return 200  -  the transfer notebook parses these URLs from this section at runtime. List one URL per bullet, either as a full URL or as a path inside backticks:
 
 - `/`
 - `/<entity>/`
@@ -104,3 +104,4 @@ Things explicitly NOT in this sprint, to prevent scope creep:
 ## 10. Notes for Future Sprints
 
 Anything the architect should remember when planning the next sprint.
+
