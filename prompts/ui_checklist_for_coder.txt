@@ -1,15 +1,179 @@
-UI checklist:
-- All UI text must be English only.
-- Do not copy Thai labels from the PDF.
-- Use Zen Green theme consistently.
-- Use dark green #004d40 title/header strips with white text.
-- Use light green/mint accents for borders, highlights, or selected states.
-- Use rounded corners and clean enterprise spacing.
-- Mark required fields with a red asterisk.
-- Every action button must have an English tooltip/title.
-- Use Font Awesome icons consistently for action buttons.
-- Numeric and currency fields must be right-aligned.
-- Header field validation must appear as red text below the field.
-- Line/grid validation must appear as floating tooltip-style messages.
-- Forms must be responsive.
-- Grids must support horizontal scrolling on small screens.
+UI Checklist (Baseline)
+
+LANGUAGE
+- All visible text is English.
+- All title= tooltips are English.
+- All validation messages are English.
+- No Thai characters anywhere in generated UI files.
+
+THEME (Zen Green)
+- Use the CSS variables defined in ui_specs/erp_invoice_ui.md:
+  --zen-primary: #004d40
+  --zen-primary-soft: #2e7d64
+  --zen-accent: #a5d6a7
+  --zen-surface: #e8f5e9
+  --zen-border: #81c784
+  --zen-error: #c62828
+- Top header strip / navbar: --zen-primary background, white text.
+- Section / card headers: --zen-primary-soft.
+- Surfaces: --zen-surface or default white.
+
+TEMPLATE STRUCTURE
+- All page templates extend templates/base.html.
+- Define {% block title %} and {% block content %}.
+- First non-comment line of a template that extends base: {% extends "base.html" %}.
+
+REUSABLE PARTIALS
+- templates/_partials/list_table.html for list views.
+- templates/_partials/form_layout.html for forms.
+- Per-entity templates are thin wrappers passing entity-specific context.
+
+CANONICAL ACTION BUTTON VOCABULARY (from form_workflow.md Section 4)
+
+List view top-right:
+  <a href="{% url '<app>:create' %}" class="btn btn-primary" title="Create new <entity>">
+    <i class="fa-solid fa-plus"></i> New
+  </a>
+  <a href="{% url 'landing' %}" class="btn btn-outline-secondary" title="Close">
+    <i class="fa-solid fa-xmark"></i> Close
+  </a>
+
+List row buttons (where Edit/Delete are in scope):
+  <a href="{% url '<app>:edit' obj.id %}" class="btn btn-sm btn-outline-secondary" title="Edit">
+    <i class="fa-solid fa-pen"></i>
+  </a>
+  <button type="button" class="btn btn-sm btn-outline-danger" title="Delete"
+          data-action="delete" data-display="{{ obj.code }}" data-url="{% url '<app>:delete' obj.id %}">
+    <i class="fa-solid fa-trash"></i>
+  </button>
+
+Form action row:
+  <button type="submit" class="btn btn-primary" title="Save">
+    <i class="fa-solid fa-floppy-disk"></i> Save
+  </button>
+  {% if obj %}
+    <button type="button" class="btn btn-danger" title="Delete"
+            data-action="delete" data-display="{{ obj|stringformat:'s' }}" data-url="{% url '<app>:delete' obj.id %}">
+      <i class="fa-solid fa-trash"></i> Delete
+    </button>
+  {% endif %}
+  <a href="{% url '<app>:list' %}" class="btn btn-secondary" data-action="close" title="Close">
+    <i class="fa-solid fa-xmark"></i> Close
+  </a>
+
+LOV (FOREIGN KEY) PATTERN
+For every ForeignKey field:
+  <label for="id_<fk>_display">Customer <span class="text-danger">*</span></label>
+  <div class="input-group">
+    <input type="text" id="id_<fk>_display" class="form-control" readonly value="{{ obj.<fk>.code|default:'' }}">
+    <input type="hidden" name="<fk>" value="{{ obj.<fk>.id|default:'' }}">
+    <button type="button" class="btn btn-outline-secondary" title="Open list of values"
+            data-action="lov" data-target="<fk>" data-url="{% url '<related_app>:lov' %}">
+      <i class="fa-solid fa-list"></i>
+    </button>
+  </div>
+A bare <select> dropdown for an FK field is a FAIL.
+
+LIST VIEWS
+- Bootstrap card containing a .table inside .table-responsive.
+- Card header with entity title (e.g., "Customers") + the New and Close buttons.
+- Empty-state: a single full-width row with text "No <entity>s yet".
+- Numeric/currency columns: text-end.
+- Display code column is the primary identifying column. Never show the numeric id.
+- Sort/search/filter: implemented in the shared list view (when available); per-entity templates do not re-implement these.
+
+FORM VIEWS
+- Bootstrap card with section header.
+- Required fields: red asterisk via <span class="text-danger">*</span> AFTER the label text.
+- Field-level errors: red text below the field, <div class="invalid-feedback d-block">.
+- Action row at bottom uses the canonical buttons above.
+- Forms include {% csrf_token %}.
+- For ForeignKey fields, render the LOV pattern (NOT a bare <select>).
+- The dirty-bit listener and save-flash auto-fade are inherited from base.html.
+
+SAVE FLASH (in base.html)
+{% if messages %}
+  <div id="flash-stack" aria-live="polite">
+    {% for m in messages %}
+      <div class="alert alert-{{ m.tags|default:'success' }} flash-msg" role="alert">{{ m }}</div>
+    {% endfor %}
+  </div>
+  <script>
+    setTimeout(function () {
+      document.querySelectorAll('.flash-msg').forEach(function (el) {
+        el.style.transition = 'opacity 0.5s'; el.style.opacity = '0';
+        setTimeout(function () { el.remove(); }, 500);
+      });
+      if (window.clearDirty) window.clearDirty();
+    }, 2000);
+  </script>
+{% endif %}
+
+DIRTY-BIT LISTENER (in base.html)
+<script>
+  (function () {
+    let formDirty = false;
+    document.addEventListener('input', function (e) {
+      if (e.target.matches('form input, form select, form textarea')) formDirty = true;
+    }, true);
+    window.formDirty = () => formDirty;
+    window.clearDirty = () => { formDirty = false; };
+    window.addEventListener('beforeunload', function (e) {
+      if (formDirty) { e.preventDefault(); e.returnValue = ''; }
+    });
+  })();
+</script>
+
+ICONS (Font Awesome 6 via CDN)
+- New: fa-plus
+- Edit: fa-pen
+- Delete: fa-trash
+- Save: fa-floppy-disk
+- Close: fa-xmark
+- LOV: fa-list
+
+NAVIGATION HIERARCHY
+- Form Close → entity's list view (with dirty-bit JS confirm).
+- List View Close → landing page (`/`).
+
+RESPONSIVENESS, DENSITY, AND SCROLLING
+
+Form column density (per form_workflow.md Section 12) — author picks 1/2/3/4 in the active sprint scope; default is 2:
+  Density 1 -> col-12
+  Density 2 -> col-12 col-md-6
+  Density 3 -> col-12 col-md-6 col-lg-4
+  Density 4 -> col-12 col-md-6 col-lg-4 col-xl-3
+Wrap each field in <div class="<density classes>">. Wrap field-rows in <div class="row g-3">.
+
+List view viewport + pagination (per form_workflow.md Section 13):
+  CSS in base.html or shared stylesheet:
+    .list-viewport { max-height: 60vh; overflow-y: auto; }
+    .list-viewport thead { position: sticky; top: 0; background: var(--zen-primary-soft); color: white; }
+  Template:
+    <div class="table-responsive list-viewport">
+      <table class="table">...</table>
+    </div>
+    <nav aria-label="Page navigation"> {{ pagination_controls }} </nav>
+  Server pagination via Django Paginator, default page_size = 50, override per sprint.
+
+Line item grid viewport (per form_workflow.md Section 14):
+  CSS:
+    .lineitem-viewport { max-height: 50vh; overflow-y: auto; }
+    .lineitem-viewport thead { position: sticky; top: 0; background: var(--zen-primary-soft); color: white; z-index: 1; }
+  Template:
+    <div class="table-responsive lineitem-viewport">
+      <table class="table">
+        <thead><tr>...</tr></thead>
+        <tbody id="lineitem-rows">...</tbody>
+      </table>
+    </div>
+    <button type="button" class="btn btn-outline-primary btn-sm" data-action="add-line" title="Add row">
+      <i class="fa-solid fa-plus"></i> Add row
+    </button>
+
+Tables: always wrap in .table-responsive for horizontal scroll on small screens.
+
+ACCESSIBILITY (LIGHTWEIGHT)
+- Every form input has a label (via for= or wrapping).
+- Buttons have visible text or aria-label.
+- Empty-state rows are visible to screen readers (no display:none tricks).
