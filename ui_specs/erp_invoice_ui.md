@@ -2,39 +2,31 @@
 
 ## 1. Purpose
 
-This document defines the UI, UX, visual style, and interaction rules for the ERP Invoice application.
+This document defines UI/UX and visual behavior for the ERP Invoice application.
 
-The UI is based on the provided `ui_specs/ui_reference.pdf`. The PDF contains some Thai labels, but the target application must use English only.
+The `ui_reference.pdf` is visual guidance only. Output UI must be English only.
 
-## 2. Strict Language Rule
+## 2. Language Rule
 
-All generated UI text must be English only, including:
+All UI text must be English:
 
 - page titles
 - menu labels
 - button labels
 - tooltips
 - validation messages
-- grid headers
-- modal dialog text
-- placeholder text
-
-Thai text in the reference PDF is visual guidance only and must not be copied into the application.
+- table headers
 
 ## 3. Zen Green Theme
 
-The application must use a green enterprise theme inspired by the reference screens.
+Use a green enterprise theme:
 
-Required visual rules:
+- dark green title strips (prefer `#004d40`) with white text
+- light green/mint accents
+- clean spacing
+- rounded corners
 
-- Main title strips and form headers must use dark green, preferably `#004d40`, with white text.
-- Accents must use light green or mint shades.
-- Large content areas should use very light green backgrounds.
-- Forms and panels must use rounded corners.
-- Editable fields and non-editable fields must have visibly different background shading.
-- Theme tokens should be defined centrally in CSS variables so the theme can later be changed.
-
-Suggested CSS tokens:
+Recommended CSS tokens:
 
 ```css
 :root {
@@ -42,244 +34,56 @@ Suggested CSS tokens:
   --zen-primary-soft: #2e7d64;
   --zen-accent: #a5d6a7;
   --zen-surface: #e8f5e9;
-  --zen-surface-strong: #c8e6c9;
   --zen-border: #81c784;
   --zen-error: #c62828;
-  --zen-readonly: #eef5f0;
-  --zen-editable: #fffde7;
 }
 ```
 
-## 4. App Shell and Navigation
+## 4. App Shell
 
-Reference: page 3 of the PDF shows the app shell and control menu.
+Required shell behavior:
 
-Required behavior:
+- top navigation with module groups
+- user placeholder area
+- landing page with brief English welcome text
 
-- Top navigation bar with module menus.
-- Visible database selector placeholder.
-- Visible current user indicator placeholder.
-- Landing page with brief English welcome text.
-- Menu structure should support at least:
-  - Master Data
-  - Transactions
-  - Reports
-  - Control
-
-All menu labels must be English.
-
-## 5. Login Screen
-
-Reference: page 2 of the PDF shows a login screen with database selection.
-
-Required fields:
-
-- Database
-- Username
-- Password
-- Remember me
-- Sign in button
+## 5. List Views
 
 Required behavior:
 
-- Login screen elements in the PDF are visual reference only for this phase.
-- Assume the user is authenticated before entering the app.
-- Implementing login/password flows is deferred to a future sprint.
+- consistent container style
+- sortable/filterable columns where practical
+- pagination where practical
+- numeric/currency columns right-aligned
 
-## 6. List Views
+In the baseline, use Bootstrap tables first. Rich grid replacement can be a future sprint item.
 
-References:
-
-- Product list view on page 4
-- Invoice list view on page 6
-- User list view on page 15
-- Role list view on page 20
+## 6. Form Views
 
 Required behavior:
 
-- Use a consistent green list container.
-- Use shaded grid headers.
-- Support filtering/search rows where practical.
-- Support pagination.
-- Support sortable columns where practical.
-- Use Tabulator for rich grid behavior when appropriate.
-- Tabulator must be referenced from local static files in the generated app (for example `wwwroot/lib/tabulator`), not CDN.
-- Numeric and currency columns must be right-aligned.
-- Text columns must be left-aligned.
+- dark green section headers
+- required fields marked with red asterisk
+- clear validation messages near affected fields
+- action buttons with descriptive English tooltips
 
-## 7. Form Views
+## 7. Validation UX
 
-References:
+- field-level errors: red text below field
+- table/line-item errors: compact inline or tooltip-style message near affected input
+- optional summary block for form-level errors
 
-- Product form view on page 5
-- Invoice form view on pages 7 and 8
-- User form views on pages 16 and 17
-- Role form views on pages 21 and 22
+## 8. Responsiveness
 
-Required behavior:
+- header fields adapt from multi-column to single column on small screens
+- list/table views support horizontal scrolling where needed
 
-- Use a dark green form header strip.
-- Use a row of compact action buttons.
-- Every action button must include a descriptive English tooltip.
-- Required fields must show a red asterisk next to the label.
-- Form sections must be visually grouped.
-- View mode and edit mode should be visually distinguishable.
+## 9. Icons and Buttons
 
-## 8. Header Attribute-Value Layouts
+- use Font Awesome icons where appropriate
+- keep icon use consistent
+- every action button must include an English tooltip/title
 
-Reference: pages 7, 10, and 14 show two styles of header fields.
+## 10. Scope Rule
 
-The application must support two header field styles:
-
-### Regular Attribute-Value Fields
-
-- Label above or beside input.
-- Responsive layout supports 1, 2, 3, or 4 fields per row depending on screen width.
-- Fields should be evenly spaced.
-
-### Tabular Attribute-Value Fields
-
-- Field label appears like a green table heading.
-- Value appears below the shaded label.
-- Developer can specify width per field.
-- Useful for totals such as subtotal, VAT rate, VAT amount, and grand total.
-
-## 9. Invoice Form Layout
-
-References: pages 7, 8, and 14.
-
-Required header fields:
-
-- Running ID
-- Invoice No.
-- Invoice Date
-- Customer
-- Customer Name
-- Address Line 1
-- Address Line 2
-- Address Line 3
-- Country
-- Subtotal
-- VAT Rate
-- VAT Amount
-- Grand Total
-
-Required line item fields:
-
-- Line No.
-- Product Code
-- Product Name
-- Quantity
-- Unit Price
-- Unit
-- Line Total
-
-Required behavior:
-
-- Line item grid must support horizontal scrolling on small screens.
-- Header fields must wrap responsively.
-- Totals must be visually separated using tabular attribute-value fields.
-- Numeric and currency values must be right-aligned.
-
-## 10. Validation UX
-
-Reference: page 9 of the PDF.
-
-Required behavior:
-
-- Header field validation messages must appear as a separate row of red text immediately below the affected field.
-- Line-item/grid validation messages must appear as tooltip-style floating message boxes anchored near the affected cell.
-- A general validation summary or modal may be used for whole-form validation.
-- Required fields must be marked with a red asterisk.
-
-## 11. Dirty Bit Check
-
-Reference: page 10 of the PDF.
-
-Required behavior:
-
-- If a user attempts to leave a form with unsaved changes, show a confirmation prompt.
-- The prompt text must be English.
-- This may be implemented in a future sprint if needed.
-
-## 12. Date Selector
-
-Reference: page 10 of the PDF.
-
-Required behavior:
-
-- Date fields should provide a date selector button or browser-supported date input.
-- Date selector controls must match the Zen Green style where practical.
-
-## 13. Buttons, Icons, and Tooltips
-
-Reference: page 10 of the PDF shows tooltips on buttons.
-
-Required behavior:
-
-- Use Font Awesome icons for common actions.
-- Every action button must have a descriptive English tooltip.
-- Tooltip hover state should use a dark background with light text.
-
-Suggested actions:
-
-- Save
-- Edit
-- Delete
-- Cancel
-- Search
-- Select
-- Add Line
-- Remove Line
-- Open List of Values
-
-## 14. List of Values (LoV)
-
-References: pages 12 and 13.
-
-Required behavior:
-
-- LoV should reuse the same list-view pattern used by normal model list pages.
-- LoV should support selection mode for foreign key lookup.
-- LoV should support sorting.
-- LoV should support filtering by text.
-- LoV should support range filtering for date and numeric fields where practical.
-- LoV should support pagination.
-- LoV may provide a Create New button where appropriate.
-- Clicking a row should select the record in selection mode.
-
-## 15. Responsiveness
-
-Reference: page 14 of the PDF.
-
-Required behavior:
-
-- Header fields must adjust from multi-column layout to single-column layout on small screens.
-- Line item grids must support horizontal scrolling.
-- Form header and main action area should remain usable on small screens.
-
-## 16. Central Subforms
-
-References: pages 23 and 24.
-
-The app may eventually include common subforms for:
-
-- Change Log
-- Notes
-- Attachments
-
-These are optional for early sprints and may be placeholders until later implementation.
-
-## 17. Auditor Checklist for UI Auditor
-
-The UI Auditor must reject code if it violates any of these rules:
-
-- Thai text appears in UI output.
-- Dark green header/title strip is missing.
-- Required fields lack a red asterisk.
-- Numeric or currency fields are not right-aligned.
-- Action buttons lack English tooltips.
-- Form panels lack rounded corners.
-- Validation messages do not follow the required header vs. line-item behavior.
-- Responsive behavior is missing for header fields or line item grids.
-- Tabulator grid styling does not follow the green enterprise look where Tabulator is used.
+This is a pre-sprint baseline. Sprint documents should refine component-level rules as needed.

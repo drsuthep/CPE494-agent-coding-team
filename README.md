@@ -1,138 +1,50 @@
 # CPE494-agent-coding-team
 
-This repository implements a **multi-agent AI coding team** that collaborates to design, generate, and validate a real-world software application.
+This repository contains a multi-agent coding workflow for CPE494.
 
-The agents work together to build an **ASP.NET Core ERP Invoice application** in the companion repository:
+Students use this repo together with the companion target app repo:
 
-👉 **CPE494-erp-invoice-app-by-ai**
+- `CPE494-agent-coding-team` (this repo): orchestration, prompts, specs, runtime logs.
+- `CPE494-erp-invoice-app-by-ai`: generated application code.
 
----
+## Current Baseline
 
-## Objective
+This baseline is pre-sprint and ready for a new implementation cycle.
 
-This project is part of the **CPE494 course** and is designed to:
+- Orchestration: Python notebooks and scripts
+- Target app stack: Django + SQLite + Templates + Bootstrap
+- Delivery style: one sprint at a time, with audit before apply
 
-- Teach how **AI agents collaborate as a development team**
-- Demonstrate **agent orchestration workflows**
-- Show how AI can generate and evolve an application through **iterative one-sprint-at-a-time delivery**
-- Prepare students to discuss **agent-based development systems in interviews**
+## Core Workflow
 
----
+1. Define current sprint goal and scope.
+2. Run `notebooks/agent_coding_workflow.ipynb` to generate and audit outputs.
+3. Review outputs in `outputs/runs/<run_id>/`.
+4. Apply approved files using `notebooks/transfer_generated_files.ipynb`.
+5. Run checks in target app repo and commit accepted changes.
 
-## Multi-Agent Roles
+## Source-of-Truth Specs
 
-The system simulates a software engineering team composed of:
+- `logic_specs/erp_invoice_logic.md`
+- `ui_specs/erp_invoice_ui.md`
+- `ui_specs/ui_reference.pdf`
 
-- **Architect**
-  - Analyzes requirements
-  - Defines structure and design
-  - Produces a task plan (JSON)
-
-- **Coder**
-  - Generates source code (C#, Razor Pages, CSS)
-  - Follows defined conventions and constraints
-
-- **Logic Tester**
-  - Validates correctness of code
-  - Checks database rules and integrity
-  - Ensures safe transaction behavior
-
-- **UI Auditor**
-  - Validates UI against design rules
-  - Enforces the "Zen Green" theme
-  - Checks layout and usability constraints
-
----
-
-## Workflow
-
-The system follows a structured, human-in-the-loop workflow:
-
-1. Human provides the **Current Sprint Goal**
-2. Architect generates:
-   - `manifest.json`
-   - `tasks.json`
-3. Human reviews and approves the plan
-4. For each task:
-   - Coder generates code
-   - Logic Tester validates correctness
-   - UI Auditor validates UI/UX
-5. Only outputs that **pass all checks** are accepted
-6. Approved changes are applied to the target application
-7. Application is built and verified
-8. Human reviews changes via Git and commits
-
----
-
-## Target Application
-
-This agent system generates code into:
-
-👉 **CPE494-erp-invoice-app-by-ai**
-
-The application is developed one sprint at a time. Sprint 1 is completed, and Sprint 2 is the current focus:
-
-- App shell and layout
-- Customer list and form UI flow
-- Additional capabilities in a future sprint
-
----
-
-## Technology Stack
-
-- **Language**: Python (agent orchestration)
-- **LLM**: Gemini API
-- **Backend App**: ASP.NET Core (Razor Pages, C#)
-- **Database**: Entity Framework Core
-- **Frontend**: CSS, Tabulator, Font Awesome
-- **Environment**: VS Code
-- **Version Control**: Git and GitHub
-
----
-
-## Project Structure
+## Repository Structure
 
 ```text
-notebooks/      Demonstration notebooks (agent workflow)
-prompts/        Agent role definitions
-src/            Core orchestration logic
-outputs/        Generated plans, logs, and artifacts
+notebooks/      orchestration and apply flow
+prompts/        role prompts for each agent
+logic_specs/    business and data requirements
+ui_specs/       UI/UX requirements and visual references
+outputs/        run artifacts and logs
 ```
-
----
-
-## Running the Agent
-
-From the project root:
-
-```bash
-python src/orchestrator.py
-```
-
-Or run the notebook:
-
-```text
-notebooks/01_agent_demo.ipynb
-```
-
----
 
 ## Notes for Students
 
-- This system is intentionally implemented in **pure Python** for transparency
-- You are expected to understand:
-  - how agents collaborate
-  - how tasks are decomposed
-  - how outputs are validated before acceptance
-- AI output is not guaranteed to be correct — **verification is required**
-
----
-
-## Key Idea
-
-AI can function as a structured software engineering team when properly orchestrated, constrained, and reviewed.
-
----
+- Keep prompts and specs separate.
+- Keep sprint scope small and testable.
+- Do not apply generated files directly without review.
+- Use Git commits and run snapshots for traceability.
 
 ## License
 
